@@ -3,7 +3,7 @@ import Button from './Button'
 const Header = ({ title }) => {
 
     const onClick = () => {
-        console.log('Button was clicked at home')
+        console.log('Button was clicked ')
     }
 
     return (
