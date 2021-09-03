@@ -26,22 +26,22 @@ function App() {
     }
   ])
 
-  // Delete Task 
+  // Delete Task fuunction 
   const deleteTask = (id) => {
     console.log('delete task', id);
     setTasks(tasks.filter((task) => task.id !== id)) //taking the tasks that are present, for each task that is not equal to the id will be removed
   }
 
-  // Toggle Reminder
+  // Toggle Reminder fucntion 
   const toggleReminder = (id) =>{
     setTasks(
-      tasks.map((task) =>
+      tasks.map((task) => //checks if set reimnder is true or false 
          task.id === id ? {...task, reminder:
          !task.reminder} : task 
         )
     )
   }
-  //Rendering Components 
+  //Rendering Components to virtual DOM
   return (
     <div className="container">
       <Header/>
