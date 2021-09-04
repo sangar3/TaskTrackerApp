@@ -26,7 +26,15 @@ function App() {
     }
   ])
 
-  // Delete Task fuunction 
+  // Add Tasks
+  const addTask = (task) => {
+    const id = Math.floor(Math.random() * 10000) + 1 // this gets a random id number 
+    const newTask = {id, ...task}
+    setTasks([...tasks,newTask])
+  }
+
+
+  // Delete Tasks function 
   const deleteTask = (id) => {
     console.log('delete task', id);
     setTasks(tasks.filter((task) => task.id !== id)) //taking the tasks that are present, for each task that is not equal to the id will be removed
@@ -45,7 +53,7 @@ function App() {
   return (
     <div className="container">
       <Header/>
-      <AddTask/>
+      <AddTask onAdd={addTask} />
       {tasks.length > 0 ? <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} /> : 'No Tasks Available'} 
     </div>
   );
