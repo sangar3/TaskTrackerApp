@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import Header from './components/Header';
 import Tasks from './components/Tasks';
 import AddTask from './components/AddTask';
@@ -9,6 +9,25 @@ function App() {
   const [showAddTask, setShowAddTask] = useState(false) // sets states of the components
   const [tasks, setTasks] = useState([])
 
+
+  // Use Effect- grabbing api data 
+  useEffect(() => {
+    const getTasks = async () => 
+    {
+      const tasksFromServer = await fetchTasks()
+      setTasks(tasksFromServer)
+    }
+
+    getTasks()
+  }, [])
+
+  // Fetch Tasks 
+  const fetchTasks = async() => {
+    const res = await fetch('http://localhost:5000/tasks') // grabbing api json data
+    const data = await res.json()
+    return data
+  }
+
   // Add Tasks
   const addTask = (task) => {
     const id = Math.floor(Math.random() * 10000) + 1 // this gets a random id number 
@@ -18,9 +37,12 @@ function App() {
 
 
   // Delete Tasks function 
-  const deleteTask = (id) => {
-    console.log('delete task', id);
+  const deleteTask = async (id) => {
+    await fetch(`http://localhost:5000/tasks/${id}`, {
+      method:'DELETE'
+    })
     setTasks(tasks.filter((task) => task.id !== id)) //taking the tasks that are present, for each task that is not equal to the id will be removed
+    console.log('delete task', id);
   }
 
   // Toggle Reminder fucntion 
