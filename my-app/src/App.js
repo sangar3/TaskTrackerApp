@@ -5,6 +5,8 @@ import AddTask from './components/AddTask';
 import './App.css';
 
 function App() {
+
+  const [showAddTask, setShowAddTask] = useState(false) // sets states of the components
   const [tasks, setTasks] = useState([
     {
         id:1,
@@ -49,11 +51,11 @@ function App() {
         )
     )
   }
-  //Rendering Components to virtual DOM
+  //Rendering Components to virtual DOM, if show add task is true then show the add task user input. 
   return (
     <div className="container">
-      <Header/>
-      <AddTask onAdd={addTask} />
+      <Header onAdd={() => setShowAddTask(!showAddTask)} /> 
+      {showAddTask && <AddTask onAdd={addTask} />} 
       {tasks.length > 0 ? <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} /> : 'No Tasks Available'} 
     </div>
   );
