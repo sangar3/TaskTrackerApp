@@ -54,7 +54,10 @@ function App() {
   //Rendering Components to virtual DOM, if show add task is true then show the add task user input. 
   return (
     <div className="container">
-      <Header onAdd={() => setShowAddTask(!showAddTask)} /> 
+      <Header 
+        onAdd={() => setShowAddTask(!showAddTask)} 
+        showAdd={showAddTask}
+      /> 
       {showAddTask && <AddTask onAdd={addTask} />} 
       {tasks.length > 0 ? <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} /> : 'No Tasks Available'} 
     </div>
