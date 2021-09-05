@@ -2,8 +2,8 @@
   "tasks": [
     {
       "text": "test",
-      "day": "date",
-      "reminder": true,
+      "day": "test",
+      "reminder": false,
       "id": 1
     }
   ]

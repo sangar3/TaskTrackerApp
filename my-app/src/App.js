@@ -12,8 +12,7 @@ function App() {
 
   // Use Effect- grabbing api data 
   useEffect(() => {
-    const getTasks = async () => 
-    {
+    const getTasks = async () => {
       const tasksFromServer = await fetchTasks()
       setTasks(tasksFromServer)
     }
@@ -21,12 +20,21 @@ function App() {
     getTasks()
   }, [])
 
-  // Fetch Tasks 
-  const fetchTasks = async() => {
-    const res = await fetch('http://localhost:5000/tasks') // grabbing api json data
+  // Fetch Task
+  const fetchTasks = async(id) => {
+    const res = await fetch(`http://localhost:5000/tasks/`) // grabbing api json data
     const data = await res.json()
     return data
   }
+
+    // Fetch Task
+  const fetchTask = async (id) => {
+    const res = await fetch(`http://localhost:5000/tasks/${id}`)
+    const data = await res.json()
+
+    return data
+  }
+  
 
   // Add Tasks
   const addTask = async  (task) => {
@@ -59,11 +67,25 @@ function App() {
   }
 
   // Toggle Reminder fucntion 
-  const toggleReminder = (id) =>{
+  const toggleReminder = async (id) =>{
+    const taskToToggle = await fetchTask(id)
+    const updTask = {...taskToToggle,
+    reminder: !taskToToggle.reminder}
+    
+    const res = await fetch(`http://localhost:5000/tasks/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-type':'application/json'
+      },
+      body:JSON.stringify(updTask)
+    })
+
+    const data =  await res.json()
+
     setTasks(
       tasks.map((task) => //checks if set reimnder is true or false 
          task.id === id ? {...task, reminder:
-         !task.reminder} : task 
+         data.reminder} : task 
         )
     )
   }
